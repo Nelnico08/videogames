@@ -20,11 +20,14 @@ module.exports = (sequelize) => {
     released: {
       type: DataTypes.DATEONLY
     },
+    image:{
+      type: DataTypes.STRING
+    },
     rating: {
       type: DataTypes.FLOAT
     },
     platforms: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false
     }
   });

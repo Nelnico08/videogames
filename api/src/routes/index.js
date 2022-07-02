@@ -1,19 +1,17 @@
 const { Router } = require('express');
-const { API_KEY } = process.env;
+
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-
+const videogames = require('./videogames');
+const videogame = require('./videogame');
+const genres = require('./genres')
 
 const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-router.get("/videogames",  (req, res) => {
-    const videogames = fetch(`https://api.rawg.io/api/games?key=${API_KEY}`)
-        .then(game => game.json());    
-    
-    res.json(videogames)
-})
-
+router.use("/videogames", videogames);
+router.use("/videogame", videogame);
+router.use("/genres", genres);
 
 module.exports = router;
