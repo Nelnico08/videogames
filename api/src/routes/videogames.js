@@ -84,7 +84,7 @@ router.get('/', async (req, res) =>{
             res.send(videogames)   
         }
     }catch(err){
-        console.log(err)
+        res.status(404).send(err.message)
     }
 });
 
@@ -92,47 +92,29 @@ router.post('/', async (req, res) =>{
     try{
         const { name, description, released, image, rating, platforms, genres } = req.body;
 
-        const newVideogame = await Videogame.create({
-            name,
-            description,
-            released,
-            image,
-            rating,
-            platforms,
-            genres
-        })
-        genres?.forEach(async genre =>{
-            let findGenre =  await Genre.findOne({
-                where: {name:genre}
+        if(!name || !description || !platforms) throw new Error("Faltan parametros");
+        else {
+            const newVideogame = await Videogame.create({
+                name,
+                description,
+                released,
+                image,
+                rating,
+                platforms,
+                genres
+            });
+            genres?.forEach(async genre =>{
+                let findGenre =  await Genre.findOne({
+                    where: {name:genre}
+                })
+                newVideogame.addGenre(findGenre)
             })
-            newVideogame.addGenre(findGenre)
-        })
-        res.send(newVideogame);
-    }catch(err){
-        console.log(err)
-    }
-});
-
-router.put('/', async (req, res) =>{
-    try{
-        const { name, description, released, image, rating, platforms, genres } = req.body;
-
-        const condition = {};
-        const where = {};
-        if(name) where.name = name;
-        if(description) where.description = description;
-        if(released) where.released = released;
-        if(image) where.image = image;
-        if(rating) where.rating = rating;
-        if(platforms) where.platforms = platforms;
-        if(genres) where.genres = genres;
-
-        condition.where= where;
-
+            res.send(newVideogame);
+        }
         
     }catch(err){
-        console.log(err)
+        res.status(400).send(err.message)
     }
-})
+});
 
 module.exports = router;
