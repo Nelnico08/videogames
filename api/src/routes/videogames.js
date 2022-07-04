@@ -53,7 +53,22 @@ router.get('/', async (req, res) =>{
             res.send(videogames.length ? videogames : `Can't find ${name}`)
         }
         else{
-            const videogames = [];
+            let videogames = [];
+
+            const gameDb = await Videogame.findAll();
+
+            if(gameDb.length){
+                videogames = gameDb.map(elem =>{
+                    return{
+                        id: elem.id,
+                        name: elem.name,
+                        released: elem.released,
+                        image: elem.image,
+                        rating: elem.rating,
+                        genres: elem.genres
+                    }
+                })
+            }
 
             const pageOne = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
             const pageTwo = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=2`);
