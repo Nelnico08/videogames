@@ -12,11 +12,6 @@ function App() {
     <div className="App">
       <Route exact path='/' component={Landing}/>
       <Route exact path='/home' component={Home}/>
-      {/* <Route exact path='/home'>
-        <NavBar/>
-        <Home/>
-        <Cards/>
-      </Route> */}
       <Route exact path='/videogame/create' component={CreateGame}/>
       <Route exact path='/videogames/:id' component={Videogame}/>
     </div>

@@ -16,7 +16,7 @@ router.get('/:id', async (req, res) =>{
                 },
                 include: Genre
             });
-            
+
             if(!DbVideogame) throw new Error("Videogame not found");
             else{
                 game = {
@@ -29,20 +29,24 @@ router.get('/:id', async (req, res) =>{
                     platforms: DbVideogame.platforms,
                     genres: DbVideogame.genres.map(genre => genre.name)
                 } 
-            }
-            ;
+            };
+
         }else{
             const apiVideogame = (await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)).data;
-            game = {
-                id: apiVideogame.id,
-                name: apiVideogame.name,
-                description: apiVideogame.description_raw,
-                released: apiVideogame.released,
-                image: apiVideogame.image,
-                rating: apiVideogame.rating,
-                platforms: apiVideogame.platforms.map(plat => plat.platform.name),
-                genres: apiVideogame.genres.map(genre => genre.name)
-            }
+
+            // if(apiVideogame.detail !== undefined) throw new Error("Videogame not found");  //si la api no encuentra el videojuego por id, devuelve un objeto con una propiedad "detail"
+            // else{
+                game = {
+                    id: apiVideogame.id,
+                    name: apiVideogame.name,
+                    description: apiVideogame.description_raw,
+                    released: apiVideogame.released,
+                    image: apiVideogame.image,
+                    rating: apiVideogame.rating,
+                    platforms: apiVideogame.platforms.map(plat => plat.platform.name),
+                    genres: apiVideogame.genres.map(genre => genre.name)
+                }  
+            // }  
         }
         res.send(game)
     }catch(err){
