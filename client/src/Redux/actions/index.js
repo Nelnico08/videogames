@@ -18,7 +18,7 @@ export const allGames = () => {
 
       if(!response.length) throw new Error("Videogames not found")
       if(response.length){
-        const videogame = response.data.map(elem =>{
+        const videogame = response.map(elem =>{
           return{
             id: elem.id,
             name: elem.name,

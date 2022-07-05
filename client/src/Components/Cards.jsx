@@ -1,32 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { allGames } from '../Redux/actions';
 import Card from './Card';
 // import style from '../Styles/Cards.css'
 
 export default function Cards() {
 
-  let mock = [
-    {
-      id: 1,
-      name: "lala",
-      genre: ["genero1", "genero2"],
-      image: "urlImagenlala"
-    },
-    {
-      id: 2,
-      name: "pepe",
-      genre: ["genero3", "genero4"],
-      image: "urlImagenpepe"
-    }
-]
+  const videogames = useSelector((state) => state.videogames);
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(allGames())
+  },[dispatch]);
 
   return (
     <div>
       {
-        mock && mock?.map(elem=>
+        videogames && videogames?.map(elem=>
           <Card
+            id= {elem.id}
             name= {elem.name}
-            genre= {elem.genre}
+            genres= {elem.genres}
             image= {elem.image}
+            rating={elem.rating}
             key= {elem.id}
           />
         )

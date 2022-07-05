@@ -1,12 +1,13 @@
 import React from 'react';
 // import style from '../Styles/Card.css'
 
-export default function Card({name, genre, image}) {
+export default function Card({name, genres, image, rating}) {
   return (
     <div>
       <p>{name}</p>
-      <p>genero: {genre.join(", ")}</p>
-      <p>{image}</p>
+      <p>generos: {genres.join(" - ")}</p>
+      <p>rating: {rating}</p>
+      {/* <img src={image} alt='videogame'/> */}
     </div>
   )
 }

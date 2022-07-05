@@ -32,7 +32,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_GAME:
       return{
         ...state,
-        games: [...games, ...action.payload]
+        games: [...state.games, ...action.payload]
       }
     case GET_GENRES:
       return{
@@ -69,7 +69,7 @@ const rootReducer = (state = initialState, action) => {
       }
     case ORDER_BY_NAME:
       let alphabeticOrder = state.videogames;
-      if(action.payload === 'A-Z'){
+      if(action.payload === 'A-Z'){   
         alphabeticOrder = alphabeticOrder.sort((a,b) =>{
           if(a.name < b.name) return -1;
           if(a.name > b.name) return 1;
@@ -110,6 +110,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         gameDetail: action.payload
       }
+    default:
+      return state;
   }
 };
 
