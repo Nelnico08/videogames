@@ -10,23 +10,27 @@ router.get('/:id', async (req, res) =>{
         const { id } = req.params;
         let game;
         if(id.length > 6){
-           const DbVideogame = await Videogame.findOne({
-            where:{
-                id: id
-            },
-            include: Genre
-        });
-            game = {
-                id: DbVideogame.id,
-                name: DbVideogame.name,
-                description: DbVideogame.description,
-                released: DbVideogame.released,
-                image: DbVideogame.image,
-                rating: DbVideogame.rating,
-                platforms: DbVideogame.platforms,
-                genres: DbVideogame.genres.map(genre => genre.name)
-                
-            };
+            const DbVideogame = await Videogame.findOne({
+                where:{
+                    id: id
+                },
+                include: Genre
+            });
+            
+            if(!DbVideogame) throw new Error("Videogame not found");
+            else{
+                game = {
+                    id: DbVideogame.id,
+                    name: DbVideogame.name,
+                    description: DbVideogame.description,
+                    released: DbVideogame.released,
+                    image: DbVideogame.image,
+                    rating: DbVideogame.rating,
+                    platforms: DbVideogame.platforms,
+                    genres: DbVideogame.genres.map(genre => genre.name)
+                } 
+            }
+            ;
         }else{
             const apiVideogame = (await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)).data;
             game = {
