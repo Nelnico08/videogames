@@ -41,7 +41,7 @@ router.get('/:id', async (req, res) =>{
                     name: apiVideogame.name,
                     description: apiVideogame.description_raw,
                     released: apiVideogame.released,
-                    image: apiVideogame.image,
+                    image: apiVideogame.background_image,
                     rating: apiVideogame.rating,
                     platforms: apiVideogame.platforms.map(plat => plat.platform.name),
                     genres: apiVideogame.genres.map(genre => genre.name)
