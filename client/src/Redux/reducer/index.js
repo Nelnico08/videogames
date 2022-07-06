@@ -11,8 +11,7 @@ import {
 } from '../actionTypes';
 
 const initialState = {
-  videogames: [], //para guardar todos los juegos (api + db)
-  games: [], //para guardar solo los juegos al buscar un juego, filtrar por creacion o genero u ordenar
+  videogames: [],
   gameDetail: {},
   genres: [],
 }
@@ -32,7 +31,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_GAME:
       return{
         ...state,
-        games: [...state.games, ...action.payload]
+        videogames: [...state.videogames, ...action.payload]
       }
     case GET_GENRES:
       return{
@@ -58,14 +57,14 @@ const rootReducer = (state = initialState, action) => {
       };
       return{
         ...state,
-        games: filterGame
+        videogames: filterGame
       };
     case FILTER_BY_GENRE:
       const filterGames = state.videogames;
       const genreFilter = action.payload === 'all games' ? filterGames : filterGames.filter(e=> e.genres.includes(action.payload))
       return{
         ...state,
-        games: genreFilter
+        videogames: genreFilter
       }
     case ORDER_BY_NAME:
       let alphabeticOrder = state.videogames;
@@ -84,7 +83,7 @@ const rootReducer = (state = initialState, action) => {
       };
       return{
         ...state,
-        games: alphabeticOrder
+        videogames: alphabeticOrder
       }
     case ORDER_BY_RATING:
       let ratingOrder = state.videogames;
@@ -103,7 +102,7 @@ const rootReducer = (state = initialState, action) => {
       };
       return{
         ...state,
-        games: ratingOrder
+        videogames: ratingOrder
       }
     case CLEAN_STATE:
       return{
