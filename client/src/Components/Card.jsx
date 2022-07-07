@@ -7,7 +7,7 @@ export default function Card({name, genres, image, rating, id}) {
     <div>
       <Link to={`/videogames/${id}`}>
         <p>{name}</p>
-        <p>generos: {genres.join(" - ")}</p>
+        <p>generos: {genres?.join(" - ")}</p>
         <p>rating: {rating}</p>
       {/* <img src={image} alt='videogame'/> */}
       </Link>

@@ -1,6 +1,7 @@
 import { 
   ALL_GAMES, 
-  CLEAN_STATE,
+  CLEAN_DETAIL_STATE,
+  CLEAN_VIDEOGAME_STATE,
   FILTER_BY_CREATION,
   FILTER_BY_GENRE,
   GAME_DETAIL, 
@@ -12,6 +13,7 @@ import {
 
 const initialState = {
   videogames: [],
+  games: [], //copia de videogames al entrar al home, para manejar los filtros y ordenamientos sobre un mismo array
   gameDetail: {},
   genres: [],
 }
@@ -21,7 +23,8 @@ const rootReducer = (state = initialState, action) => {
     case ALL_GAMES:
       return{
         ...state,
-        videogames: [...state.videogames, ...action.payload]
+        videogames: action.payload,
+        games: action.payload
       }
     case GAME_DETAIL: 
       return{
@@ -31,80 +34,82 @@ const rootReducer = (state = initialState, action) => {
     case GET_GAME:
       return{
         ...state,
-        videogames: [...state.videogames, ...action.payload]
+        videogames: action.payload
       }
     case GET_GENRES:
       return{
         ...state,
-        genres: [...state.genres, ...action.payload]
+        genres: action.payload
       }
     case FILTER_BY_CREATION:
       let filterGame;
-      if(action.payload === 'original games'){
-        let filterOrigin = state.videogames.filter(e=> e.id.toString().length < 7);
+      if(action.payload === 'Original Games'){
+        let filterOrigin = state.games.filter(e=> e.id.toString().length < 7);
         filterGame = filterOrigin;
       };
-      if(action.payload === 'created games'){
-        let filterCreated = state.videogames.filter(e => e.id.toString().length > 6);
+      if(action.payload === 'Added Games'){
+        let filterCreated = state.games.filter(e => e.id.toString().length > 6);
         filterGame = filterCreated;
 
         if(!filterGame.length){
           filterGame = ['No games created']
         };
       };
-      if(action.payload === 'all games'){
-        filterGame = state.videogames;
+      if(action.payload === 'All Games'){
+        filterGame = state.games;
       };
       return{
         ...state,
         videogames: filterGame
       };
     case FILTER_BY_GENRE:
-      const filterGames = state.videogames;
-      const genreFilter = action.payload === 'all games' ? filterGames : filterGames.filter(e=> e.genres.includes(action.payload))
+      const filterGames = state.games;
+      let genreFilter = action.payload === 'All Genres' ? filterGames : filterGames.filter(e=> e.genres.includes(action.payload))
       return{
         ...state,
         videogames: genreFilter
       }
     case ORDER_BY_NAME:
-      let alphabeticOrder = state.videogames;
-      if(action.payload === 'A-Z'){   
-        alphabeticOrder = alphabeticOrder.sort((a,b) =>{
+      let orderGames = state.videogames;
+      let alphabeticOrder = action.payload === 'A-Z' ?
+        orderGames.sort((a,b) =>{
           if(a.name < b.name) return -1;
           if(a.name > b.name) return 1;
           return 0
-        })
-      }else{
-        alphabeticOrder = alphabeticOrder.sort((a,b) =>{
+        }) :  
+        orderGames.sort((a,b) =>{
           if(a.name < b.name) return 1;
           if(a.name > b.name) return -1;
           return 0
-        })
-      };
+        });
+
       return{
         ...state,
         videogames: alphabeticOrder
       }
     case ORDER_BY_RATING:
-      let ratingOrder = state.videogames;
-      if(action.payload === 'higher'){
-        alphabeticOrder = alphabeticOrder.sort((a,b) =>{
+      let ratingOrder = action.payload === 'higher rating' ?
+        state.videogames.sort((a,b) =>{
           if(a.rating < b.rating) return 1;
           if(a.rating > b.rating) return -1;
           return 0
-        })
-      }else{
-        alphabeticOrder = alphabeticOrder.sort((a,b) =>{
+        }) :
+        state.videogames.sort((a,b) =>{
           if(a.rating < b.rating) return -1;
           if(a.rating > b.rating) return 1;
           return 0
-        })
-      };
+        });
+      ;
       return{
         ...state,
         videogames: ratingOrder
       }
-    case CLEAN_STATE:
+    case CLEAN_VIDEOGAME_STATE:
+      return{
+        ...state,
+        videogames: action.payload
+      }
+    case CLEAN_DETAIL_STATE:
       return{
         ...state,
         gameDetail: action.payload

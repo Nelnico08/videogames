@@ -1,23 +1,18 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { allGames } from '../Redux/actions';
+import React from 'react';
 import Card from './Card';
+import GameNotFound from './GameNotFound';
+import Loading from './Loading'
 // import style from '../Styles/Cards.css'
 
-export default function Cards() {
+export default function Cards({videogames}) {
 
-  const videogames = useSelector((state) => state.videogames);
-
-  const dispatch = useDispatch();
-
-  useEffect(()=>{
-    dispatch(allGames())
-  },[dispatch]);
+  if(videogames[0] === 'No games created'){return <GameNotFound/>};
+  if(!videogames.length){return <Loading/>}
 
   return (
     <div>
       {
-        videogames && videogames?.map(elem=>
+        videogames?.map(elem=>
           <Card
             id= {elem.id}
             name= {elem.name}

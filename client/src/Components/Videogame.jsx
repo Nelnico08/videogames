@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom';
-import { cleanState, gameDetail } from '../Redux/actions';
+import { cleanDetailState, gameDetail } from '../Redux/actions';
 // import style from '../Styles/Videogame.css';
 
 export default function Videogame() {
@@ -17,7 +17,7 @@ export default function Videogame() {
 
   useEffect(()=>{
     return () =>{
-      dispatch(cleanState())
+      dispatch(cleanDetailState())
     }
   },[dispatch]);
 

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { 
   ALL_GAMES, 
-  CLEAN_STATE,
+  CLEAN_DETAIL_STATE,
+  CLEAN_VIDEOGAME_STATE,
   FILTER_BY_CREATION,
   FILTER_BY_GENRE,
   GAME_DETAIL, 
@@ -109,11 +110,19 @@ export const createNewGame = (newVideogame) => {
   }
 };
 
-export const cleanState = () => {
+export const cleanVideogamesState = () => {
   return {
-    type: CLEAN_STATE,
+    type: CLEAN_VIDEOGAME_STATE,
+    payload: []
+  };
+};
+
+export const cleanDetailState = () => {
+  return {
+    type: CLEAN_DETAIL_STATE,
     payload: {}
   };
 };
+
 
 
