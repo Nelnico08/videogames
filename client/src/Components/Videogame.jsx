@@ -1,25 +1,24 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { cleanDetailState, gameDetail } from '../Redux/actions';
 // import style from '../Styles/Videogame.css';
 
 export default function Videogame() {
-
   const detail = useSelector((state) => state.gameDetail);
 
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  useEffect(()=>{
-    dispatch(gameDetail(id))
-  },[dispatch,id]);
+  useEffect(() => {
+    dispatch(gameDetail(id));
+  }, [dispatch, id]);
 
-  useEffect(()=>{
-    return () =>{
-      dispatch(cleanDetailState())
-    }
-  },[dispatch]);
+  useEffect(() => {
+    return () => {
+      dispatch(cleanDetailState());
+    };
+  }, [dispatch]);
 
   return (
     <header>
@@ -32,10 +31,9 @@ export default function Videogame() {
         <p>Description: {detail.description}</p>
         <img src={detail.image} />
       </div>
-      <Link to='/home'>
+      <Link to="/home">
         <button>BACK TO HOME</button>
       </Link>
     </header>
-
-  )
+  );
 }
