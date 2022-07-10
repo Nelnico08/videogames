@@ -2,101 +2,137 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { createNewGame } from '../Redux/actions';
-import { all_genres, all_platforms } from '../Genres_Platforms/GenresPlatforms';
+import validation from '../Validations/Validations';
+import Name from './Form/Name';
+import Genres from './Form/Genres';
+import Platforms from './Form/Platforms';
+import Released from './Form/Released';
+import Rating from './Form/Rating';
+import Description from './Form/Description';
+import Image from './Form/Image';
 // import style from '../Styles/CreateGame.css';
 
 export default function CreateGame() {
-  const [newVideogame, setNewVideogame] = useState({
+  const [errors, setErrors] = useState({});
+  const state = {
     name: '',
     released: '',
     rating: 0,
+    image: '',
     genres: [],
     platforms: [],
     description: '',
-  });
+  };
+  const [newVideogame, setNewVideogame] = useState(state);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleOnChange = (e) => {
     e.preventDefault();
-    setNewVideogame({ name: e.target.value });
+    let gameState;
+    //transformo las primeras letras de cada palabra en mayusculas
+    if (e.target.name === 'name') {
+      let videogameName = e.target.value;
+      videogameName = videogameName
+        .toLowerCase()
+        .split(' ')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+
+      setNewVideogame((prev) => {
+        gameState = {
+          ...prev,
+          name: videogameName,
+        };
+        setErrors(validation(gameState));
+        return gameState;
+      });
+      //permito valores multiples para generos y plataformas
+    } else if (e.target.name === 'genres' || e.target.name === 'platforms') {
+      if (newVideogame[e.target.name].includes(e.target.value)) {
+        setNewVideogame((prev) => {
+          gameState = {
+            ...prev,
+            [e.target.name]: newVideogame[e.target.name].filter(
+              (elem) => elem !== e.target.value
+            ),
+          };
+          setErrors(validation(gameState));
+          return gameState;
+        });
+      } else {
+        setNewVideogame((prev) => {
+          gameState = {
+            ...prev,
+            [e.target.name]: [...newVideogame[e.target.name], e.target.value],
+          };
+          setErrors(validation(gameState));
+          return gameState;
+        });
+      }
+    } else {
+      setNewVideogame((prev) => {
+        gameState = {
+          ...prev,
+          [e.target.name]: e.target.value,
+        };
+        setErrors(validation(gameState));
+        return gameState;
+      });
+    }
   };
 
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    if (Object.keys(errors).length !== 0 || newVideogame === state) {
+      alert('Some inputs are missing');
+    } else {
+      // dispatch(createNewGame(newVideogame));
+      setNewVideogame(state);
+      history.push('/home');
+    }
+  };
+
+  console.log(errors);
   return (
     <div>
       <Link to="/home">
         <button>Back to home</button>
       </Link>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          // dispatch(createNewGame(newVideogame));
-          history.push('/home');
-        }}
-      >
+      <form onSubmit={(e) => handleOnSubmit(e)}>
         <h2>Post new videogame</h2>
-        <label>Name: </label>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={newVideogame.name}
-          onChange={handleOnChange}
+        <Name
+          name={newVideogame.name}
+          handleOnChange={handleOnChange}
+          error={errors.name}
         />
-        <label>Released: </label>
-        <input
-          type="date"
-          name="released"
-          value={newVideogame.released}
-          onChange={handleOnChange}
+        <Released
+          released={newVideogame.released}
+          handleOnChange={handleOnChange}
         />
-        <label>Rating: </label>
-        <input
-          type="number"
-          placeholder="between 1-5"
-          name="rating"
-          value={newVideogame.rating}
-          onChange={handleOnChange}
+        <Rating rating={newVideogame.rating} handleOnChange={handleOnChange} />
+        <Image
+          image={newVideogame.image}
+          handleOnChange={handleOnChange}
+          error={errors.image}
         />
         <div>
-          <label>Genres: </label>
-          {/*select con 19 opciones de generos */}
-          <select
-            multiple
-            name="genres"
-            value={newVideogame.genres}
-            onChange={handleOnChange}
-          >
-            {all_genres.map((genre) => (
-              <option value={genre}>{genre}</option>
-            ))}
-          </select>
-          <ul>
-            {newVideogame.genres?.map((genre) => (
-              <li>{genre}</li>
-            ))}
-          </ul>
+          <Genres
+            genres={newVideogame.genres}
+            handleOnChange={handleOnChange}
+            error={errors.genres}
+          />
         </div>
-
-        <label>Platforms: </label>
-        {/*select con 12 opciones de plataformas */}
-        <select
-          multiple
-          name="platforms"
-          value={newVideogame.platforms}
-          onChange={handleOnChange}
-        >
-          {all_platforms.map((platform) => (
-            <option value={platform}>{platform}</option>
-          ))}
-        </select>
-        <label>Description: </label>
-        <input
-          type="text"
-          placeholder="Description..."
-          name="description"
-          value={newVideogame.description}
-          onChange={handleOnChange}
+        <Platforms
+          platforms={newVideogame.platforms}
+          handleOnChange={handleOnChange}
+          error={errors.platforms}
+        />
+        <Description
+          description={newVideogame.description}
+          handleOnChange={handleOnChange}
+          error={errors.description}
         />
         <button type="submit">Post new videogame</button>
       </form>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { all_genres } from '../Genres_Platforms/GenresPlatforms';
 import SearchBar from './SearchBar';
@@ -21,7 +21,9 @@ export default function NavBar({
         <select onChange={(e) => genreHandler(e)}>
           <option value="All Genres">All Genres</option>
           {all_genres.map((genre) => (
-            <option value={genre}>{genre}</option>
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
           ))}
         </select>
         {/*select con 3 options */}
