@@ -1,0 +1,22 @@
+.content {
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.input {
+  width: 150px;
+}
+
+.searchButton {
+  background-color: aqua;
+  width: 100px;
+  height: 20px;
+  border: none;
+  border-radius: 5px;
+  margin: 2px;
+}
+
+.searchButton:hover {
+  background-color: blueviolet;
+  border: 1px solid whitesmoke;
+}

@@ -1,0 +1,25 @@
+.content {
+  height: 100vh;
+  background-image: url(../Images/background1.jpg);
+}
+
+.image {
+  margin-top: 50px;
+}
+
+.status {
+  color: aqua;
+  text-shadow: 2px 1px rgb(0, 97, 97);
+}
+
+.back {
+  background-color: aqua;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.back:hover {
+  background-color: blueviolet;
+  border: 1px solid whitesmoke;
+}

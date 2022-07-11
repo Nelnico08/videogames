@@ -37,9 +37,15 @@
 }
 
 .formButton:hover {
-  color: white;
-  background-color: blue;
+  background-color: blueviolet;
   border: 1px solid whitesmoke;
   height: 28px;
   width: 150px;
+}
+
+.comment {
+  margin: 5px;
+  font-size: 15px;
+  color: aqua;
+  font-weight: bold;
 }

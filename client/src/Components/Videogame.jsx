@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { cleanDetailState, gameDetail } from '../Redux/actions';
-// import style from '../Styles/Videogame.css';
+import style from '../Styles/Videogame.module.css';
 
 export default function Videogame() {
   const detail = useSelector((state) => state.gameDetail);
@@ -21,19 +21,31 @@ export default function Videogame() {
   }, [dispatch]);
 
   return (
-    <header>
-      <div>
-        <h2>{detail.name}</h2>
-        <p>Released: {detail.released}</p>
-        <p>Rating: {detail.rating}</p>
-        <p>Platforms: {detail.platforms?.join(' - ')}</p>
-        <p>Genres: {detail.genres?.join(' - ')}</p>
-        <p>Description: {detail.description}</p>
-        <img src={detail.image} />
+    <header className={style.content}>
+      <div className={style.detailsContent}>
+        <Link to="/home">
+          <button className={style.button}>BACK TO HOME</button>
+        </Link>
+        <h2 className={style.nameTitle}>{detail.name}</h2>
+        <p className={style.details}>
+          <b>Released:</b> {detail.released}
+        </p>
+        <p className={style.details}>
+          <b>Rating:</b> {detail.rating}
+        </p>
+        <p className={style.details}>
+          <b>Platforms:</b> {detail.platforms?.join(' - ')}
+        </p>
+        <p className={style.details}>
+          <b>Genres:</b> {detail.genres?.join(' - ')}
+        </p>
+        <p className={`${style.details} ${style.description}`}>
+          <b>Description:</b> {detail.description}
+        </p>
       </div>
-      <Link to="/home">
-        <button>BACK TO HOME</button>
-      </Link>
+      <div className={style.imgContent}>
+        <img src={detail.image} className={style.image} />
+      </div>
     </header>
   );
 }

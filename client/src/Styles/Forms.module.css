@@ -21,3 +21,20 @@
   font-size: small;
   text-shadow: 2px 1px rgb(80, 48, 48);
 }
+
+/* input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} */
+.selects {
+  width: 300px;
+  text-align: center;
+}
+
+.descriptionInput {
+  margin-top: 10px;
+  height: 80px;
+  text-justify: auto;
+  resize: none;
+}

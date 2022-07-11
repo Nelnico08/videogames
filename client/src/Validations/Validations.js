@@ -5,7 +5,7 @@ export default function validation(input) {
   let errors = {};
   if (input.name === '') {
     errors.name = 'Name is required';
-  } else if (!/^[a-zA-Z]+$/.test(input.name)) {
+  } else if (!/^[a-zA-Z]+$/.test(input.name.charAt(0))) {
     errors.name = 'Name must start with a letter';
   }
   if (!input.released) {

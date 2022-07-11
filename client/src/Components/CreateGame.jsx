@@ -131,6 +131,7 @@ export default function CreateGame() {
           handleOnChange={handleOnChange}
           error={errors.description}
         />
+        <p className={style.comment}>* Fields required</p>
         <button className={style.formButton} type="submit">
           Post videogame
         </button>

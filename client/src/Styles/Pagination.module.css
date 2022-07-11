@@ -41,13 +41,16 @@ li button {
 }
 
 .prevButton:hover {
-  background-color: blue;
+  background-color: blueviolet;
+  border: 1px solid whitesmoke;
 }
 
 li button:hover {
-  background-color: blue;
+  background-color: blueviolet;
+  border: 1px solid whitesmoke;
 }
 
 .nextButton:hover {
-  background-color: blue;
+  background-color: blueviolet;
+  border: 1px solid whitesmoke;
 }
