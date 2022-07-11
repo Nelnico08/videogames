@@ -1,0 +1,26 @@
+.content {
+  background-color: rgba(161, 161, 161, 0.486);
+  margin: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 325px;
+  border-radius: 0 15%;
+  cursor: pointer;
+}
+
+.content img {
+  display: block;
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+}
+
+.content:hover {
+  margin: 0;
+  width: 258px;
+  height: 333px;
+  border: 1px solid whitesmoke;
+}

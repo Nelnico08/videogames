@@ -12,7 +12,7 @@ import {
 import Cards from './Cards';
 import NavBar from './NavBar';
 import Pagination from './Pagination';
-// import style from '../Styles/Home.css'
+import style from '../Styles/Home.module.css';
 
 export default function Home() {
   const videogames = useSelector((state) => state.videogames);
@@ -104,7 +104,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className={style.content}>
       <NavBar
         genreHandler={genreHandler}
         createdGameHandler={createdGameHandler}
@@ -113,14 +113,16 @@ export default function Home() {
         searchGame={searchGame}
         resetGames={resetGames}
       />
-      <Cards videogames={currentGames} />
-      <Pagination
-        gamesPerPage={gamesPerPage}
-        allVideogames={allVideogames}
-        paginate={paginate}
-        prevHandler={prevHandler}
-        nextHandler={nextHandler}
-      />
+      <div>
+        <Cards videogames={currentGames} />
+        <Pagination
+          gamesPerPage={gamesPerPage}
+          allVideogames={allVideogames}
+          paginate={paginate}
+          prevHandler={prevHandler}
+          nextHandler={nextHandler}
+        />
+      </div>
     </div>
   );
 }

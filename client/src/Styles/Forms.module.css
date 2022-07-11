@@ -1,0 +1,23 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  color: aqua;
+  font-weight: bold;
+}
+
+.input {
+  width: 300px;
+  border: none;
+  box-shadow: 2px 1px rgb(73, 73, 73);
+}
+
+.error {
+  color: rgb(199, 0, 0);
+  font-weight: bold;
+  font-size: small;
+  text-shadow: 2px 1px rgb(80, 48, 48);
+}

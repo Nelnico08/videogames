@@ -2,7 +2,7 @@ import React from 'react';
 import Card from './Card';
 import GameNotFound from './GameNotFound';
 import Loading from './Loading';
-// import style from '../Styles/Cards.css'
+import style from '../Styles/Cards.module.css';
 
 export default function Cards({ videogames }) {
   if (videogames[0] === 'No games created') {
@@ -13,7 +13,7 @@ export default function Cards({ videogames }) {
   }
 
   return (
-    <div>
+    <div className={style.content}>
       {videogames?.map((elem) => (
         <Card
           id={elem.id}

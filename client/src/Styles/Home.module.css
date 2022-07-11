@@ -1,0 +1,9 @@
+.content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-image: url(../Images/background1.jpg);
+  position: absolute;
+  background-size: cover;
+  background-repeat: no-repeat;
+}

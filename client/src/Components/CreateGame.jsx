@@ -10,7 +10,7 @@ import Released from './Form/Released';
 import Rating from './Form/Rating';
 import Description from './Form/Description';
 import Image from './Form/Image';
-// import style from '../Styles/CreateGame.css';
+import style from '../Styles/CreateGame.module.css';
 
 export default function CreateGame() {
   const [errors, setErrors] = useState({});
@@ -96,12 +96,9 @@ export default function CreateGame() {
 
   console.log(errors);
   return (
-    <div>
-      <Link to="/home">
-        <button>Back to home</button>
-      </Link>
-      <form onSubmit={(e) => handleOnSubmit(e)}>
-        <h2>Post new videogame</h2>
+    <div className={style.content}>
+      <form onSubmit={(e) => handleOnSubmit(e)} className={style.formContent}>
+        <h2 className={style.formTitle}>Post new videogame</h2>
         <Name
           name={newVideogame.name}
           handleOnChange={handleOnChange}
@@ -134,7 +131,12 @@ export default function CreateGame() {
           handleOnChange={handleOnChange}
           error={errors.description}
         />
-        <button type="submit">Post new videogame</button>
+        <button className={style.formButton} type="submit">
+          Post videogame
+        </button>
+        <Link to="/home">
+          <button className={style.formButton}>Back to home</button>
+        </Link>
       </form>
     </div>
   );

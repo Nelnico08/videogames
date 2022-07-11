@@ -1,0 +1,53 @@
+.content {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-width: 300px;
+}
+
+.prevButton {
+  background-color: aqua;
+  width: 40px;
+  border-radius: 50% 15% 15% 50%;
+  border: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.numPages {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+li {
+  width: 2rem;
+}
+
+li button {
+  background-color: aqua;
+  height: 25px;
+  width: 25px;
+  border: none;
+}
+
+.nextButton {
+  background-color: aqua;
+  width: 40px;
+  border: none;
+  border-radius: 15% 50% 50% 15%;
+}
+
+.prevButton:hover {
+  background-color: blue;
+}
+
+li button:hover {
+  background-color: blue;
+}
+
+.nextButton:hover {
+  background-color: blue;
+}
