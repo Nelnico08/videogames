@@ -38,7 +38,7 @@
 
 .formButton:hover {
   background-color: blueviolet;
-  border: 1px solid whitesmoke;
+  border: 1px solid aqua;
   height: 28px;
   width: 150px;
 }

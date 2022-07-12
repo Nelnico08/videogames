@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { cleanDetailState, gameDetail } from '../Redux/actions';
 import style from '../Styles/Videogame.module.css';
+import Loading from './Loading';
 
 export default function Videogame() {
   const detail = useSelector((state) => state.gameDetail);
@@ -19,6 +20,16 @@ export default function Videogame() {
       dispatch(cleanDetailState());
     };
   }, [dispatch]);
+
+  if (Object.keys(detail).length === 0) {
+    return (
+      <header className={style.content}>
+        <div className={style.loader}>
+          <Loading />
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className={style.content}>

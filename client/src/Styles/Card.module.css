@@ -1,5 +1,5 @@
 .content {
-  background-color: rgba(161, 161, 161, 0.486);
+  background-color: rgba(99, 99, 99, 0.637);
   margin: 5px;
   display: flex;
   flex-wrap: wrap;
@@ -9,6 +9,10 @@
   height: 325px;
   border-radius: 0 15%;
   cursor: pointer;
+}
+
+.game {
+  color: aqua;
 }
 
 .content img {
@@ -22,5 +26,5 @@
   margin: 0;
   width: 258px;
   height: 333px;
-  border: 1px solid whitesmoke;
+  border: 1px solid aqua;
 }

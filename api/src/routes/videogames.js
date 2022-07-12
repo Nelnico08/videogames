@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
             released: elem.released,
             image: elem.image,
             rating: elem.rating,
-            genres: elem.genres,
+            genres: elem.genres.map((genre) => genre.name),
           };
         });
       }
@@ -53,7 +53,7 @@ router.get('/', async (req, res) => {
       }
       let videogames = [...DbVideogame, ...apiVideogames];
       if (!videogames.length) {
-        return res.json({ error: `Can't find ${name}` });
+        return res.send("Can't find game");
       }
       videogames = videogames.slice(0, 15);
 
@@ -61,7 +61,10 @@ router.get('/', async (req, res) => {
     } else {
       let videogames = [];
 
-      const gameDb = await Videogame.findAll();
+      const gameDb = await Videogame.findAll({
+        include: Genre,
+        limit: 100,
+      });
 
       if (gameDb.length) {
         videogames = gameDb.map((elem) => {
@@ -71,7 +74,7 @@ router.get('/', async (req, res) => {
             released: elem.released,
             image: elem.image,
             rating: elem.rating,
-            genres: elem.genres,
+            genres: elem.genres.map((genre) => genre.name),
           };
         });
       }

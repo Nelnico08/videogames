@@ -32,9 +32,15 @@ const rootReducer = (state = initialState, action) => {
         gameDetail: action.payload,
       };
     case GET_GAME:
+      let theGame;
+      if (action.payload === "Can't find game") {
+        theGame = ["Can't find game"];
+      } else {
+        theGame = action.payload;
+      }
       return {
         ...state,
-        videogames: action.payload,
+        videogames: theGame,
       };
     case GET_GENRES:
       return {
@@ -44,13 +50,13 @@ const rootReducer = (state = initialState, action) => {
     case FILTER_BY_CREATION:
       let filterGame;
       if (action.payload === 'Original Games') {
-        let filterOrigin = state.games.filter(
+        let filterOrigin = state.games?.filter(
           (e) => e.id.toString().length < 7
         );
         filterGame = filterOrigin;
       }
       if (action.payload === 'Added Games') {
-        let filterCreated = state.games.filter(
+        let filterCreated = state.games?.filter(
           (e) => e.id.toString().length > 6
         );
         filterGame = filterCreated;
@@ -71,7 +77,7 @@ const rootReducer = (state = initialState, action) => {
       let genreFilter =
         action.payload === 'All Genres'
           ? filterGames
-          : filterGames.filter((e) => e.genres.includes(action.payload));
+          : filterGames.filter((e) => e.genres?.includes(action.payload));
       return {
         ...state,
         videogames: genreFilter,

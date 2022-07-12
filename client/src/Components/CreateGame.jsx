@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { createNewGame } from '../Redux/actions';
+import { allGames, createNewGame, getGenres } from '../Redux/actions';
 import validation from '../Validations/Validations';
 import Name from './Form/Name';
 import Genres from './Form/Genres';
@@ -17,7 +17,7 @@ export default function CreateGame() {
   const state = {
     name: '',
     released: '',
-    rating: 0,
+    rating: '',
     image: '',
     genres: [],
     platforms: [],
@@ -27,6 +27,10 @@ export default function CreateGame() {
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
 
   const handleOnChange = (e) => {
     e.preventDefault();
@@ -88,7 +92,7 @@ export default function CreateGame() {
     if (Object.keys(errors).length !== 0 || newVideogame === state) {
       alert('Some inputs are missing');
     } else {
-      // dispatch(createNewGame(newVideogame));
+      dispatch(createNewGame(newVideogame));
       setNewVideogame(state);
       history.push('/home');
     }

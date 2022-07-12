@@ -40,7 +40,7 @@ export default function Home() {
 
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  let currentGames = videogames.slice(indexOfFirstGame, indexOfLastGame);
+  let currentGames = videogames?.slice(indexOfFirstGame, indexOfLastGame);
   const allVideogames = videogames.length;
 
   //handlers de paginado
@@ -110,6 +110,7 @@ export default function Home() {
   };
   const resetFiltersHandler = (e) => {
     e.preventDefault();
+    dispatch(cleanVideogamesState());
     dispatch(allGames());
     setSelects({
       order: '',
@@ -124,6 +125,7 @@ export default function Home() {
   //buscador
   const searchGame = (game) => {
     dispatch(getGame(game));
+    dispatch(cleanVideogamesState());
     setCurrentPage(1);
   };
 

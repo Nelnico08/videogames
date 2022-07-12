@@ -42,15 +42,15 @@ li button {
 
 .prevButton:hover {
   background-color: blueviolet;
-  border: 1px solid whitesmoke;
+  border: 1px solid aqua;
 }
 
 li button:hover {
   background-color: blueviolet;
-  border: 1px solid whitesmoke;
+  border: 1px solid aqua;
 }
 
 .nextButton:hover {
   background-color: blueviolet;
-  border: 1px solid whitesmoke;
+  border: 1px solid aqua;
 }

@@ -5,7 +5,10 @@ import Loading from './Loading';
 import style from '../Styles/Cards.module.css';
 
 export default function Cards({ videogames }) {
-  if (videogames[0] === 'No games created') {
+  if (
+    videogames[0] === 'No games created' ||
+    videogames[0] === "Can't find game"
+  ) {
     return <GameNotFound />;
   }
   if (!videogames.length) {
