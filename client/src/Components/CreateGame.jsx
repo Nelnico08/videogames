@@ -98,7 +98,6 @@ export default function CreateGame() {
     }
   };
 
-  console.log(errors);
   return (
     <div className={style.content}>
       <form onSubmit={(e) => handleOnSubmit(e)} className={style.formContent}>
