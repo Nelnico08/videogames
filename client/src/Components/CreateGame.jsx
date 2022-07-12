@@ -110,6 +110,7 @@ export default function CreateGame() {
         <Released
           released={newVideogame.released}
           handleOnChange={handleOnChange}
+          error={errors.released}
         />
         <Rating rating={newVideogame.rating} handleOnChange={handleOnChange} />
         <Image
