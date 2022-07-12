@@ -13,7 +13,7 @@ import {
 
 const initialState = {
   videogames: [],
-  games: [], //copia de videogames al entrar al home, para manejar los filtros y ordenamientos sobre un mismo array
+  games: [], //copia de videogames
   gameDetail: {},
   genres: [],
 };

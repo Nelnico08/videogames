@@ -19,7 +19,12 @@ export default function Home() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage] = useState(15);
-  const [order, setOrder] = useState('');
+  // const [order, setOrder] = useState('');
+  const [selects, setSelects] = useState({
+    order: '',
+    genres: '',
+    created: '',
+  });
 
   const dispatch = useDispatch();
 
@@ -56,11 +61,19 @@ export default function Home() {
   //handlers del Navbar
   const genreHandler = (e) => {
     e.preventDefault();
+    setSelects({
+      ...selects,
+      genres: e.target.value,
+    });
     dispatch(filterByGenre(e.target.value));
     setCurrentPage(1);
   };
   const createdGameHandler = (e) => {
     e.preventDefault();
+    setSelects({
+      ...selects,
+      created: e.target.value,
+    });
     dispatch(filterByCreation(e.target.value));
     setCurrentPage(1);
   };
@@ -68,7 +81,10 @@ export default function Home() {
     e.preventDefault();
     if (e.target.value === 'A-Z' || e.target.value === 'Z-A') {
       dispatch(orderByName(e.target.value));
-      setOrder(`${e.target.value}`);
+      setSelects({
+        ...selects,
+        order: `${e.target.value}`,
+      });
       setCurrentPage(1);
     }
     if (
@@ -76,25 +92,33 @@ export default function Home() {
       e.target.value === 'lower rating'
     ) {
       dispatch(orderByRating(e.target.value));
-      setOrder(`${e.target.value}`);
+      setSelects({
+        ...selects,
+        order: `${e.target.value}`,
+      });
       setCurrentPage(1);
     }
     if (e.target.value === 'null') {
       dispatch(cleanVideogamesState());
       dispatch(allGames());
-      setOrder(`${e.target.value}`);
+      setSelects({
+        ...selects,
+        order: `${e.target.value}`,
+      });
       setCurrentPage(1);
     }
   };
   const resetFiltersHandler = (e) => {
     e.preventDefault();
     dispatch(allGames());
+    setSelects({
+      order: '',
+      genres: '',
+      created: '',
+    });
   };
   const resetGames = (e) => {
-    e.preventDefault();
-    dispatch(cleanVideogamesState());
-    dispatch(allGames());
-    setCurrentPage(1);
+    resetFiltersHandler(e);
   };
 
   //buscador
@@ -112,6 +136,7 @@ export default function Home() {
         resetFiltersHandler={resetFiltersHandler}
         searchGame={searchGame}
         resetGames={resetGames}
+        selects={selects}
       />
       <div>
         <Cards videogames={currentGames} />

@@ -11,6 +11,7 @@ export default function NavBar({
   resetFiltersHandler,
   searchGame,
   resetGames,
+  selects,
 }) {
   return (
     <div className={style.content}>
@@ -28,7 +29,11 @@ export default function NavBar({
         </Link>
         <h3 className={style.filterTitle}>Filters</h3>
         {/*select con 20 options => 19generos y all games */}
-        <select onChange={(e) => genreHandler(e)} className={style.selects}>
+        <select
+          onChange={(e) => genreHandler(e)}
+          className={style.selects}
+          value={selects.genres}
+        >
           <option value="All Genres">All Genres</option>
           {all_genres.map((genre) => (
             <option key={genre} value={genre}>
@@ -40,6 +45,7 @@ export default function NavBar({
         <select
           onChange={(e) => createdGameHandler(e)}
           className={style.selects}
+          value={selects.created}
         >
           <option value="All Games">All Videogames</option>
           <option value="Original Games">Original Videogames</option>
@@ -48,7 +54,11 @@ export default function NavBar({
       </div>
       <div>
         {/*select con 5 options */}
-        <select onChange={(e) => sortHandler(e)} className={style.selects}>
+        <select
+          onChange={(e) => sortHandler(e)}
+          className={style.selects}
+          value={selects.order}
+        >
           <option value="null">Sort by</option>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
