@@ -19,7 +19,6 @@ export default function Home() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage] = useState(15);
-  // const [order, setOrder] = useState('');
   const [selects, setSelects] = useState({
     order: '',
     genres: '',
@@ -40,7 +39,7 @@ export default function Home() {
 
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  let currentGames = videogames?.slice(indexOfFirstGame, indexOfLastGame);
+  const currentGames = videogames?.slice(indexOfFirstGame, indexOfLastGame);
   const allVideogames = videogames.length;
 
   //handlers de paginado

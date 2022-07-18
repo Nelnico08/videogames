@@ -6,159 +6,146 @@ const { API_KEY } = process.env;
 const axios = require('axios');
 const { Videogame, Genre } = require('../db');
 
-router.get('/', async (req, res) => {
-  try {
-    const { name } = req.query;
-    if (name) {
-      let DbVideogame = [];
-      const data = await Videogame.findAll({
-        where: {
-          name: { [Op.iLike]: `%${name}%` },
-        },
-        include: Genre,
-        limit: 15,
+router.get('/', (req, res) => {
+  const { name } = req.query;
+
+  if (name) {
+    let allVideogames = [];
+    Videogame.findAll({
+      where: {
+        name: { [Op.iLike]: `%${name}%` },
+      },
+      include: Genre,
+      limit: 15,
+    })
+      .then((dbGamesSearch) => {
+        if (dbGamesSearch.length) {
+          allVideogames = dbGamesSearch?.map((elem) => {
+            return {
+              id: elem.id,
+              name: elem.name,
+              released: elem.released,
+              image: elem.image,
+              rating: elem.rating,
+              platforms: elem.platforms?.map((plat) => plat),
+              genres: elem.genres?.map((genre) => genre.name),
+            };
+          });
+          return allVideogames;
+        }
+      })
+      .then(() => {
+        axios
+          .get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`)
+          .then((resp) => resp.data.results)
+          .then((apiGamesSearch) => {
+            if (apiGamesSearch.length) {
+              apiGamesSearch.forEach((elem) => {
+                allVideogames.push({
+                  id: elem.id,
+                  name: elem.name,
+                  released: elem.released,
+                  image: elem.background_image,
+                  rating: elem.rating,
+                  platforms: elem.platforms?.map((plat) => plat.platform.name),
+                  genres: elem.genres?.map((genre) => genre.name),
+                });
+              });
+              return allVideogames;
+            }
+          })
+          .then(() => {
+            if (!allVideogames.length) {
+              return res.status(404).send("Can't find game");
+            }
+            allVideogames = allVideogames.slice(0, 15);
+
+            res.send(allVideogames);
+          });
+      })
+      .catch((err) => err.message);
+  } else {
+    let videogames = [];
+
+    Videogame.findAll({
+      include: Genre,
+      limit: 100,
+    })
+      .then((allDBGames) => {
+        if (allDBGames.length) {
+          videogames = allDBGames.map((elem) => {
+            return {
+              id: elem.id,
+              name: elem.name,
+              released: elem.released,
+              image: elem.image,
+              rating: elem.rating,
+              platforms: elem.platforms.map((plat) => plat),
+              genres: elem.genres.map((genre) => genre.name),
+            };
+          });
+        }
+        return videogames;
+      })
+      .then(() => {
+        let pagePetitions = [];
+        for (let i = 1; i < 6; i++) {
+          pagePetitions.push(
+            axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)
+          );
+        }
+
+        Promise.all(pagePetitions)
+          .then((petition) => petition.map((elem) => elem.data.results))
+          .then((pages) => {
+            pages.forEach((e) =>
+              e.forEach((elem) => {
+                videogames.push({
+                  id: elem.id,
+                  name: elem.name,
+                  released: elem.released,
+                  image: elem.background_image,
+                  rating: elem.rating,
+                  platforms: elem.platforms.map((plat) => plat.platform.name),
+                  genres: elem.genres.map((genre) => genre.name),
+                });
+              })
+            );
+            return res.send(videogames);
+          })
+          .catch((err) => {
+            return res.status(404).send(err.message);
+          });
       });
-
-      if (data.length > 0) {
-        DbVideogame = data.map((elem) => {
-          return {
-            id: elem.id,
-            name: elem.name,
-            released: elem.released,
-            image: elem.image,
-            rating: elem.rating,
-            genres: elem.genres.map((genre) => genre.name),
-          };
-        });
-      }
-
-      const apiPetition = (
-        await axios.get(
-          `https://api.rawg.io/api/games?search=${name}&key=${API_KEY}`
-        )
-      ).data.results;
-      let apiVideogames = [];
-      if (apiPetition.length > 0) {
-        apiVideogames = apiPetition?.map((elem) => {
-          return {
-            id: elem.id,
-            name: elem.name,
-            released: elem.released,
-            image: elem.background_image,
-            rating: elem.rating,
-            platforms: elem.platforms?.map((plat) => plat.platform.name),
-            genres: elem.genres?.map((genre) => genre.name),
-          };
-        });
-      }
-      let videogames = [...DbVideogame, ...apiVideogames];
-      if (!videogames.length) {
-        return res.send("Can't find game");
-      }
-      videogames = videogames.slice(0, 15);
-
-      res.send(videogames);
-    } else {
-      let videogames = [];
-
-      const gameDb = await Videogame.findAll({
-        include: Genre,
-        limit: 100,
-      });
-
-      if (gameDb.length) {
-        videogames = gameDb.map((elem) => {
-          return {
-            id: elem.id,
-            name: elem.name,
-            released: elem.released,
-            image: elem.image,
-            rating: elem.rating,
-            genres: elem.genres.map((genre) => genre.name),
-          };
-        });
-      }
-
-      const pageOne = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-      const pageTwo = axios.get(
-        `https://api.rawg.io/api/games?key=${API_KEY}&page=2`
-      );
-      const pageThree = axios.get(
-        `https://api.rawg.io/api/games?key=${API_KEY}&page=3`
-      );
-      const pageFour = axios.get(
-        `https://api.rawg.io/api/games?key=${API_KEY}&page=4`
-      );
-      const pageFive = axios.get(
-        `https://api.rawg.io/api/games?key=${API_KEY}&page=5`
-      );
-
-      const petitions = await Promise.all([
-        pageOne,
-        pageTwo,
-        pageThree,
-        pageFour,
-        pageFive,
-      ]);
-      const firstPage = petitions[0].data.results;
-      const secondPage = petitions[1].data.results;
-      const thirdPage = petitions[2].data.results;
-      const fourthPage = petitions[3].data.results;
-      const fifthPage = petitions[4].data.results;
-
-      let pages = [
-        ...firstPage,
-        ...secondPage,
-        ...thirdPage,
-        ...fourthPage,
-        ...fifthPage,
-      ];
-
-      pages.forEach((elem) => {
-        videogames.push({
-          id: elem.id,
-          name: elem.name,
-          released: elem.released,
-          image: elem.background_image,
-          rating: elem.rating,
-          platforms: elem.platforms.map((plat) => plat.platform.name),
-          genres: elem.genres.map((genre) => genre.name),
-        });
-      });
-      res.send(videogames);
-    }
-  } catch (err) {
-    res.status(404).send(err.message);
   }
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const { name, description, released, image, rating, platforms, genres } =
-      req.body;
+router.post('/', (req, res) => {
+  const { name, description, released, image, rating, platforms, genres } =
+    req.body;
 
-    if (!name || !description || !platforms)
-      throw new Error('Faltan parametros');
-    else {
-      const newVideogame = await Videogame.create({
-        name,
-        description,
-        released,
-        image,
-        rating,
-        platforms,
-        genres,
-      });
-      genres?.forEach(async (genre) => {
-        let findGenre = await Genre.findOne({
-          where: { name: genre },
+  if (!name || !description || !platforms) throw new Error('Faltan parametros');
+  else {
+    Videogame.create({
+      name,
+      description,
+      released,
+      image,
+      rating,
+      platforms,
+      genres,
+    })
+      .then((newVideogame) => {
+        Promise.all(
+          genres?.map((genre) => {
+            return Genre.findOne({ where: { name: genre } });
+          })
+        ).then((genreFound) => {
+          newVideogame.addGenre(genreFound);
+          return res.send(newVideogame);
         });
-        newVideogame.addGenre(findGenre);
-      });
-      res.send(newVideogame);
-    }
-  } catch (err) {
-    res.status(400).send(err.message);
+      })
+      .catch((err) => res.status(400).send(err.message));
   }
 });
 

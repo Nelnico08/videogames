@@ -11,6 +11,9 @@ export default function validation(input) {
   if (!input.released) {
     errors.released = 'A date of videogame released is required';
   }
+  if (!input.rating) {
+    errors.rating = 'Rating is required';
+  }
   if (!input.genres.length) {
     errors.genres = 'At least one genre must be selected';
   }

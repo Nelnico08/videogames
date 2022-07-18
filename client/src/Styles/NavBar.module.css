@@ -1,7 +1,7 @@
 .content {
   background-color: rgba(128, 128, 128, 0.541);
   width: 200px;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .filterTitle {

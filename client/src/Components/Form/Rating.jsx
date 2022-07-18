@@ -1,7 +1,7 @@
 import React from 'react';
 import style from '../../Styles/Forms.module.css';
 
-export default function Rating({ rating, handleOnChange }) {
+export default function Rating({ rating, handleOnChange, error }) {
   return (
     <div className={style.content}>
       <label className={style.label}>Rating: </label>
@@ -15,6 +15,7 @@ export default function Rating({ rating, handleOnChange }) {
         onChange={handleOnChange}
         className={style.input}
       />
+      {error && <span className={style.error}>{error}</span>}
     </div>
   );
 }

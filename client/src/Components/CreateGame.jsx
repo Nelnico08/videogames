@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { allGames, createNewGame, getGenres } from '../Redux/actions';
+import { createNewGame, getGenres } from '../Redux/actions';
 import validation from '../Validations/Validations';
 import Name from './Form/Name';
 import Genres from './Form/Genres';
@@ -112,7 +112,11 @@ export default function CreateGame() {
           handleOnChange={handleOnChange}
           error={errors.released}
         />
-        <Rating rating={newVideogame.rating} handleOnChange={handleOnChange} />
+        <Rating
+          rating={newVideogame.rating}
+          handleOnChange={handleOnChange}
+          error={errors.rating}
+        />
         <Image
           image={newVideogame.image}
           handleOnChange={handleOnChange}

@@ -6,52 +6,57 @@ const { API_KEY } = process.env;
 const { Videogame, Genre } = require('../db');
 
 router.get('/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    let game;
-    if (id.length > 6) {
-      const DbVideogame = await Videogame.findOne({
-        where: {
-          id: id,
-        },
-        include: Genre,
+  const { id } = req.params;
+
+  if (id.length > 6) {
+    Videogame.findOne({
+      where: { id },
+      include: Genre,
+    })
+      .then((dbVideogame) => {
+        if (!dbVideogame) throw new Error('Videogame not found');
+        else {
+          return {
+            id: dbVideogame.id,
+            name: dbVideogame.name,
+            description: dbVideogame.description,
+            released: dbVideogame.released,
+            image: dbVideogame.image,
+            rating: dbVideogame.rating,
+            platforms: dbVideogame.platforms,
+            genres: dbVideogame.genres.map((genre) => genre.name),
+          };
+        }
+      })
+      .then((game) => {
+        return res.send(game);
+      })
+      .catch((err) => {
+        return res.status(404).send(err.message);
       });
-
-      if (!DbVideogame) throw new Error('Videogame not found');
-      else {
-        game = {
-          id: DbVideogame.id,
-          name: DbVideogame.name,
-          description: DbVideogame.description,
-          released: DbVideogame.released,
-          image: DbVideogame.image,
-          rating: DbVideogame.rating,
-          platforms: DbVideogame.platforms,
-          genres: DbVideogame.genres.map((genre) => genre.name),
+  } else {
+    axios
+      .get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
+      .then((apiVideogame) => {
+        return {
+          id: apiVideogame.data.id,
+          name: apiVideogame.data.name,
+          description: apiVideogame.data.description_raw,
+          released: apiVideogame.data.released,
+          image: apiVideogame.data.background_image,
+          rating: apiVideogame.data.rating,
+          platforms: apiVideogame.data.platforms.map(
+            (plat) => plat.platform.name
+          ),
+          genres: apiVideogame.data.genres.map((genre) => genre.name),
         };
-      }
-    } else {
-      const apiVideogame = (
-        await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
-      ).data;
-
-      // if(apiVideogame.detail !== undefined) throw new Error("Videogame not found");  //si la api no encuentra el videojuego por id, devuelve un objeto con una propiedad "detail"
-      // else{
-      game = {
-        id: apiVideogame.id,
-        name: apiVideogame.name,
-        description: apiVideogame.description_raw,
-        released: apiVideogame.released,
-        image: apiVideogame.background_image,
-        rating: apiVideogame.rating,
-        platforms: apiVideogame.platforms.map((plat) => plat.platform.name),
-        genres: apiVideogame.genres.map((genre) => genre.name),
-      };
-      // }
-    }
-    res.send(game);
-  } catch (err) {
-    res.status(404).send(err.message);
+      })
+      .then((game) => {
+        return res.send(game);
+      })
+      .catch((err) => {
+        return res.status(404).send(err.message);
+      });
   }
 });
 

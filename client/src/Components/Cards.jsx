@@ -23,7 +23,6 @@ export default function Cards({ videogames }) {
           name={elem.name}
           genres={elem.genres}
           image={elem.image}
-          rating={elem.rating}
           key={elem.id}
         />
       ))}
