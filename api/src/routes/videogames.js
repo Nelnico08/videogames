@@ -56,14 +56,14 @@ router.get('/', (req, res) => {
           })
           .then(() => {
             if (!allVideogames.length) {
-              return res.status(404).send("Can't find game");
+              return res.send("Can't find game");
             }
             allVideogames = allVideogames.slice(0, 15);
 
             res.send(allVideogames);
           });
       })
-      .catch((err) => err.message);
+      .catch((err) => res.status(404).send(err.message));
   } else {
     let videogames = [];
 
@@ -88,34 +88,38 @@ router.get('/', (req, res) => {
         return videogames;
       })
       .then(() => {
-        let pagePetitions = [];
-        for (let i = 1; i < 6; i++) {
-          pagePetitions.push(
-            axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`)
-          );
-        }
+        let count = 0;
 
-        Promise.all(pagePetitions)
-          .then((petition) => petition.map((elem) => elem.data.results))
-          .then((pages) => {
-            pages.forEach((e) =>
-              e.forEach((elem) => {
-                videogames.push({
-                  id: elem.id,
-                  name: elem.name,
-                  released: elem.released,
-                  image: elem.background_image,
-                  rating: elem.rating,
-                  platforms: elem.platforms.map((plat) => plat.platform.name),
-                  genres: elem.genres.map((genre) => genre.name),
-                });
-              })
-            );
+        let pagePetition = function (response) {
+          let { data } = response;
+          videogames.push(
+            ...data.results.map((game) => {
+              return {
+                id: game.id,
+                name: game.name,
+                released: game.released,
+                image: game.background_image,
+                rating: game.rating,
+                platforms: game.platforms.map((plat) => plat.platform.name),
+                genres: game.genres.map((genre) => genre.name),
+              };
+            })
+          );
+
+          count++;
+          if (count < 5) {
+            axios.get(data.next).then(pagePetition);
+          } else {
             return res.send(videogames);
-          })
-          .catch((err) => {
-            return res.status(404).send(err.message);
-          });
+          }
+        };
+
+        axios
+          .get(`https://api.rawg.io/api/games?key=${API_KEY}`)
+          .then(pagePetition);
+      })
+      .catch((err) => {
+        return res.status(404).send(err.message);
       });
   }
 });
