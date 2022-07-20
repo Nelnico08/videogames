@@ -83,7 +83,7 @@ const rootReducer = (state = initialState, action) => {
         videogames: genreFilter,
       };
     case ORDER_BY_NAME:
-      let orderGames = state.videogames;
+      let orderGames = state.games;
       let alphabeticOrder =
         action.payload === 'A-Z'
           ? orderGames.sort((a, b) => {

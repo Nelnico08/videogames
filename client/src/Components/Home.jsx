@@ -61,7 +61,8 @@ export default function Home() {
   const genreHandler = (e) => {
     e.preventDefault();
     setSelects({
-      ...selects,
+      order: '',
+      created: '',
       genres: e.target.value,
     });
     dispatch(filterByGenre(e.target.value));
@@ -70,7 +71,8 @@ export default function Home() {
   const createdGameHandler = (e) => {
     e.preventDefault();
     setSelects({
-      ...selects,
+      order: '',
+      genres: '',
       created: e.target.value,
     });
     dispatch(filterByCreation(e.target.value));
@@ -81,7 +83,8 @@ export default function Home() {
     if (e.target.value === 'A-Z' || e.target.value === 'Z-A') {
       dispatch(orderByName(e.target.value));
       setSelects({
-        ...selects,
+        created: '',
+        genres: '',
         order: `${e.target.value}`,
       });
       setCurrentPage(1);
@@ -92,7 +95,8 @@ export default function Home() {
     ) {
       dispatch(orderByRating(e.target.value));
       setSelects({
-        ...selects,
+        created: '',
+        genres: '',
         order: `${e.target.value}`,
       });
       setCurrentPage(1);
@@ -101,7 +105,8 @@ export default function Home() {
       dispatch(cleanVideogamesState());
       dispatch(allGames());
       setSelects({
-        ...selects,
+        created: '',
+        genres: '',
         order: `${e.target.value}`,
       });
       setCurrentPage(1);

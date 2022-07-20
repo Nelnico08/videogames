@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import { cleanDetailState, deleteGame, gameDetail } from '../Redux/actions';
+import { Link, useParams } from 'react-router-dom';
+import { cleanDetailState, gameDetail } from '../Redux/actions';
 import style from '../Styles/Videogame.module.css';
 import Loading from './Loading';
 
