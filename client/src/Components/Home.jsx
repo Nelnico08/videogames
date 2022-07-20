@@ -121,6 +121,7 @@ export default function Home() {
       genres: '',
       created: '',
     });
+    setCurrentPage(1);
   };
   const resetGames = (e) => {
     resetFiltersHandler(e);
