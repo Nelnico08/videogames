@@ -26,16 +26,19 @@ export default function Cards({
 
   return (
     <div className={style.content}>
-      {videogames?.map((elem) => (
-        <Card
-          id={elem.id}
-          name={elem.name}
-          genres={elem.genres}
-          image={elem.image}
-          key={elem.id}
-          rating={elem.ra}
-        />
-      ))}
+      <div className={style.cardsContent}>
+        {videogames?.map((elem) => (
+          <Card
+            id={elem.id}
+            name={elem.name}
+            genres={elem.genres}
+            image={elem.image}
+            key={elem.id}
+            rating={elem.ra}
+          />
+        ))}
+      </div>
+
       <div>
         <Pagination
           gamesPerPage={gamesPerPage}

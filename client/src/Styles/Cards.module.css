@@ -1,6 +1,14 @@
 .content {
   width: 85vw;
   display: flex;
+  flex-direction: column;
+  /* justify-content: space-around; */
+  /* flex-wrap: wrap; */
+}
+
+.cardsContent {
+  width: 100%;
+  display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
