@@ -7,10 +7,12 @@ export default function Pagination({
   paginate,
   prevHandler,
   nextHandler,
+  currentPage,
 }) {
   const pageNumber = [];
+  const maxPage = Math.ceil(allVideogames / gamesPerPage);
 
-  for (let i = 1; i <= Math.ceil(allVideogames / gamesPerPage); i++) {
+  for (let i = 1; i <= maxPage; i++) {
     pageNumber.push(i);
   }
 
@@ -18,19 +20,34 @@ export default function Pagination({
     <nav className={style.content}>
       <button
         onClick={() => prevHandler()}
-        className={style.prevButton}
+        className={
+          currentPage === 1
+            ? `${style.prevButton} ${style.currentPage}`
+            : `${style.prevButton}`
+        }
       ></button>
       <ul className={style.numPages}>
         {pageNumber &&
           pageNumber?.map((number) => (
             <li key={number}>
-              <button onClick={() => paginate(number)}>{number}</button>
+              <button
+                onClick={() => paginate(number)}
+                className={
+                  currentPage === number ? `${style.currentPage}` : null
+                }
+              >
+                {number}
+              </button>
             </li>
           ))}
       </ul>
       <button
         onClick={() => nextHandler()}
-        className={style.nextButton}
+        className={
+          currentPage === maxPage
+            ? `${style.nextButton} ${style.currentPage}`
+            : `${style.nextButton}`
+        }
       ></button>
     </nav>
   );

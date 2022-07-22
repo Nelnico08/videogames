@@ -2,6 +2,7 @@ import {
   ALL_GAMES,
   CLEAN_DETAIL_STATE,
   CLEAN_VIDEOGAME_STATE,
+  DELETE_GAME,
   FILTER_BY_CREATION,
   FILTER_BY_GENRE,
   GAME_DETAIL,
@@ -127,6 +128,14 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         gameDetail: action.payload,
+      };
+    case DELETE_GAME:
+      return {
+        ...state,
+        videogames: state.videogames.filter(
+          (elem) => elem.id !== action.payload
+        ),
+        games: state.games.filter((elem) => elem.id !== action.payload),
       };
     default:
       return state;

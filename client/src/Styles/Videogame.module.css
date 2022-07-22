@@ -69,3 +69,18 @@
   height: 100%;
   width: 100%;
 }
+
+.deleteButton {
+  width: 50px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.deleteButton:hover {
+  background-color: white;
+  font-weight: bold;
+  color: red;
+  border: solid 1px red;
+}

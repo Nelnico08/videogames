@@ -21,7 +21,7 @@ export default function SearchBar({ searchGame }) {
     <form className={style.content} onSubmit={(e) => handleOnSubmit(e)}>
       <input
         type="text"
-        placeholder="search videogame.."
+        placeholder="search videogame..."
         onChange={(e) => handleInputChange(e)}
         value={input}
         className={style.input}

@@ -3,6 +3,7 @@ import {
   ALL_GAMES,
   CLEAN_DETAIL_STATE,
   CLEAN_VIDEOGAME_STATE,
+  DELETE_GAME,
   FILTER_BY_CREATION,
   FILTER_BY_GENRE,
   GAME_DETAIL,
@@ -129,5 +130,19 @@ export const cleanDetailState = () => {
   return {
     type: CLEAN_DETAIL_STATE,
     payload: {},
+  };
+};
+
+export const deleteGame = (id) => {
+  return async function (dispatch) {
+    try {
+      const deletedGame = await axios.delete(
+        `http://localhost:3001/videogames/${id}`,
+        id
+      );
+      dispatch({ type: DELETE_GAME, payload: deletedGame.data });
+    } catch (err) {
+      return err.message;
+    }
   };
 };

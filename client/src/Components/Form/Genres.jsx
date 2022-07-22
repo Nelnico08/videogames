@@ -2,7 +2,12 @@ import React from 'react';
 import { all_genres } from '../../Genres_Platforms/GenresPlatforms';
 import style from '../../Styles/Forms.module.css';
 
-export default function Genres({ genres, handleOnChange, error }) {
+export default function Genres({
+  genres,
+  handleOnChange,
+  error,
+  resetGenreSelects,
+}) {
   return (
     <div className={style.content}>
       <label className={style.label}>Genres*: </label>
@@ -20,6 +25,9 @@ export default function Genres({ genres, handleOnChange, error }) {
           </option>
         ))}
       </select>
+      <button onClick={resetGenreSelects} className={style.resetSelectsButtons}>
+        Reset
+      </button>
       {error && <span className={style.error}>{error}</span>}
     </div>
   );

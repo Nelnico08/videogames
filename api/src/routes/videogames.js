@@ -153,4 +153,15 @@ router.post('/', (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Videogame.destroy({ where: { id }, inlcude: Genre });
+    res.send('Videogame deleted');
+  } catch (err) {
+    res.status(404).send(err.message);
+  }
+});
+
 module.exports = router;

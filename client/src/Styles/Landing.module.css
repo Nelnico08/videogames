@@ -16,6 +16,7 @@
   font-size: 50px;
   color: red;
   text-shadow: 2px 1px rgb(145, 0, 0);
+  user-select: none;
 }
 
 .startButton {

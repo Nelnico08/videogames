@@ -5,6 +5,12 @@
 
 .input {
   width: 150px;
+  background-color: rgba(128, 128, 128, 0.541);
+  border: none;
+}
+
+input::placeholder {
+  color: rgb(48, 48, 48);
 }
 
 .searchButton {

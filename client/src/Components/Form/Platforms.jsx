@@ -2,7 +2,12 @@ import React from 'react';
 import { all_platforms } from '../../Genres_Platforms/GenresPlatforms';
 import style from '../../Styles/Forms.module.css';
 
-export default function Platforms({ platforms, handleOnChange, error }) {
+export default function Platforms({
+  platforms,
+  handleOnChange,
+  error,
+  resetPlatformsSelects,
+}) {
   return (
     <div className={style.content}>
       <label className={style.label}>Platforms*: </label>
@@ -20,6 +25,12 @@ export default function Platforms({ platforms, handleOnChange, error }) {
           </option>
         ))}
       </select>
+      <button
+        onClick={resetPlatformsSelects}
+        className={style.resetSelectsButtons}
+      >
+        Reset
+      </button>
       {error && <span className={style.error}>{error}</span>}
     </div>
   );

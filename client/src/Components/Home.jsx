@@ -11,7 +11,6 @@ import {
 } from '../Redux/actions';
 import Cards from './Cards';
 import NavBar from './NavBar';
-import Pagination from './Pagination';
 import style from '../Styles/Home.module.css';
 
 export default function Home() {
@@ -146,13 +145,14 @@ export default function Home() {
         selects={selects}
       />
       <div>
-        <Cards videogames={currentGames} />
-        <Pagination
+        <Cards
+          videogames={currentGames}
           gamesPerPage={gamesPerPage}
           allVideogames={allVideogames}
           paginate={paginate}
           prevHandler={prevHandler}
           nextHandler={nextHandler}
+          currentPage={currentPage}
         />
       </div>
     </div>

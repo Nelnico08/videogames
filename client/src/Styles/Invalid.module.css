@@ -10,6 +10,7 @@
 .status {
   color: aqua;
   text-shadow: 2px 1px rgb(0, 97, 97);
+  user-select: none;
 }
 
 .back {

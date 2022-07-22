@@ -54,6 +54,7 @@ export default function CreateGame() {
       });
       //permito valores multiples para generos y plataformas
     } else if (e.target.name === 'genres' || e.target.name === 'platforms') {
+      console.log('este es el if ' + e.target.value);
       if (newVideogame[e.target.name].includes(e.target.value)) {
         setNewVideogame((prev) => {
           gameState = {
@@ -87,8 +88,35 @@ export default function CreateGame() {
     }
   };
 
+  const resetGenreSelects = (e) => {
+    e.preventDefault();
+    let gameState;
+    setNewVideogame((prev) => {
+      gameState = {
+        ...prev,
+        genres: [],
+      };
+      setErrors(validation(gameState));
+      return gameState;
+    });
+  };
+
+  const resetPlatformsSelects = (e) => {
+    e.preventDefault();
+    let gameState;
+    setNewVideogame((prev) => {
+      gameState = {
+        ...prev,
+        platforms: [],
+      };
+      setErrors(validation(gameState));
+      return gameState;
+    });
+  };
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    setErrors(validation(newVideogame));
     if (Object.keys(errors).length !== 0 || newVideogame === state) {
       alert('Some inputs are missing');
     } else {
@@ -127,12 +155,14 @@ export default function CreateGame() {
             genres={newVideogame.genres}
             handleOnChange={handleOnChange}
             error={errors.genres}
+            resetGenreSelects={resetGenreSelects}
           />
         </div>
         <Platforms
           platforms={newVideogame.platforms}
           handleOnChange={handleOnChange}
           error={errors.platforms}
+          resetPlatformsSelects={resetPlatformsSelects}
         />
         <Description
           description={newVideogame.description}

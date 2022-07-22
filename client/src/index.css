@@ -20,24 +20,24 @@ code {
 
 a:link {
   text-decoration: none;
-  color: #020101;
-  font-weight: bold;
+  color: aqua;
+  /* font-weight: bold; */
 }
 
 a:visited {
   text-decoration: none;
-  color: #020101;
-  font-weight: bold;
+  color: aqua;
+  /* font-weight: bold; */
 }
 
 a:hover {
-  text-decoration: none;
-  color: #020101;
-  font-weight: bold;
+  /* text-decoration: none; */
+  color: aqua;
+  /* font-weight: bold; */
 }
 
 a:active {
   text-decoration: none;
-  color: #020101;
-  font-weight: bold;
+  color: aqua;
+  /* font-weight: bold; */
 }

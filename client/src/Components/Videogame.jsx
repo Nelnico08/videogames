@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { cleanDetailState, gameDetail } from '../Redux/actions';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { cleanDetailState, deleteGame, gameDetail } from '../Redux/actions';
 import style from '../Styles/Videogame.module.css';
 import Loading from './Loading';
 
@@ -10,6 +10,7 @@ export default function Videogame() {
 
   const dispatch = useDispatch();
   const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(gameDetail(id));
@@ -30,6 +31,11 @@ export default function Videogame() {
       </header>
     );
   }
+
+  const deleteVideogame = (e) => {
+    dispatch(deleteGame(id));
+    history.push('/home');
+  };
 
   return (
     <header className={style.content}>
@@ -53,6 +59,11 @@ export default function Videogame() {
         <p className={`${style.details} ${style.description}`}>
           <b>Description:</b> {detail.description}
         </p>
+        {id.length > 6 ? (
+          <button onClick={deleteVideogame} className={style.deleteButton}>
+            Delete
+          </button>
+        ) : null}
       </div>
       <div className={style.imgContent}>
         <img src={detail.image} className={style.image} />

@@ -21,6 +21,7 @@
   font-size: 30px;
   text-shadow: 2px 1px rgb(0, 112, 112);
   margin-top: 15px;
+  user-select: none;
 }
 
 .formButton {
@@ -48,4 +49,5 @@
   font-size: 15px;
   color: aqua;
   font-weight: bold;
+  user-select: none;
 }

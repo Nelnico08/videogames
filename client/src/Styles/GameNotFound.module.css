@@ -6,4 +6,5 @@
 .title {
   color: aqua;
   text-shadow: 2px 1px rgb(1, 99, 99);
+  user-select: none;
 }
