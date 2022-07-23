@@ -34,7 +34,7 @@ export default function Cards({
             genres={elem.genres}
             image={elem.image}
             key={elem.id}
-            rating={elem.ra}
+            rating={elem.rating}
           />
         ))}
       </div>
