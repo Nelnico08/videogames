@@ -16,8 +16,7 @@ import {
 export const allGames = () => {
   return async function (dispatch) {
     try {
-      const response = (await axios.get('http://localhost:3001/videogames'))
-        .data;
+      const response = (await axios.get('/videogames')).data;
 
       if (!response.length) throw new Error('Videogames not found');
       if (response.length) {
@@ -41,9 +40,7 @@ export const allGames = () => {
 export const gameDetail = (id) => {
   return async function (dispatch) {
     try {
-      const videogame = (
-        await axios.get(`http://localhost:3001/videogame/${id}`)
-      ).data;
+      const videogame = (await axios.get(`/videogame/${id}`)).data;
 
       dispatch({ type: GAME_DETAIL, payload: videogame });
     } catch (err) {
@@ -55,9 +52,7 @@ export const gameDetail = (id) => {
 export const getGame = (game) => {
   return async function (dispatch) {
     try {
-      const games = (
-        await axios.get(`http://localhost:3001/videogames?name=${game}`)
-      ).data;
+      const games = (await axios.get(`/videogames?name=${game}`)).data;
       dispatch({ type: GET_GAME, payload: games });
     } catch (err) {
       return err.message;
@@ -68,7 +63,7 @@ export const getGame = (game) => {
 export const getGenres = () => {
   return async function (dispatch) {
     try {
-      const genres = (await axios.get('http://localhost:3001/genres')).data;
+      const genres = (await axios.get('/genres')).data;
       dispatch({ type: GET_GENRES, payload: genres });
     } catch (err) {
       return err.message;
@@ -107,10 +102,7 @@ export const orderByRating = (order) => {
 export const createNewGame = (newVideogame) => {
   return async function () {
     try {
-      const postGame = await axios.post(
-        'http://localhost:3001/videogames',
-        newVideogame
-      );
+      const postGame = await axios.post('/videogames', newVideogame);
       const postGameData = postGame.data;
       return postGameData;
     } catch (err) {
@@ -136,10 +128,7 @@ export const cleanDetailState = () => {
 export const deleteGame = (id) => {
   return async function (dispatch) {
     try {
-      const deletedGame = await axios.delete(
-        `http://localhost:3001/videogames/${id}`,
-        id
-      );
+      const deletedGame = await axios.delete(`/videogames/${id}`, id);
       dispatch({ type: DELETE_GAME, payload: deletedGame.data });
     } catch (err) {
       return err.message;
