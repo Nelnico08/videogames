@@ -59,7 +59,6 @@ router.get('/', async (req, res) => {
 
       const allDBGames = await Videogame.findAll({
         unclude: Genre,
-        limit: 100,
       });
       if (allDBGames.length) {
         videogame = allDBGames.map((elem) => {
