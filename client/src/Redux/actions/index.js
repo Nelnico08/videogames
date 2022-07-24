@@ -20,16 +20,7 @@ export const allGames = () => {
 
       if (!response.length) throw new Error('Videogames not found');
       if (response.length) {
-        const videogame = response.map((elem) => {
-          return {
-            id: elem.id,
-            name: elem.name,
-            genres: elem.genres,
-            image: elem.image,
-            rating: elem.rating,
-          };
-        });
-        dispatch({ type: ALL_GAMES, payload: videogame });
+        dispatch({ type: ALL_GAMES, payload: response });
       }
     } catch (err) {
       return err.messaje;
