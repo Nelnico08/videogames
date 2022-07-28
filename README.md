@@ -24,6 +24,25 @@ A list of technologies used within the project:
 * [Sequelize](https://sequelize.org/): Version 6.3.5
 * [PostgreSQL](https://www.postgresql.org/): Version 14
 ***
+## Installation
+***
+A little intro about the installation. 
+### Backend:
+
+```
+$ git clone https://github.com/nelnico08/videogames.git
+$ cd ../path/to/the/file/client/api
+$ npm install
+$ npm start
+```
+
+### Frontend:
+```
+$ git clone https://github.com/nelnico08/videogames.git
+$ cd ../path/to/the/file/client
+$ npm install
+$ npm start
+```
 ## Collaboration
 ***
 Hi! If you want to collaborate with the project you can make a fork and a pull request, I will take a look at it and if it's all okay I will merge it with the main branch. Thank you for your interest in the project! :smile:
