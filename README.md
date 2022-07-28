@@ -30,7 +30,7 @@ A little intro about the installation.
 ### Backend:
 
 ```
-$ git clone https://github.com/nelnico08/videogames.git
+$ git clone https://github.com/Nelnico08/videogames.git
 $ cd ../path/to/the/file/client/api
 $ npm install
 $ npm start
@@ -38,7 +38,7 @@ $ npm start
 
 ### Frontend:
 ```
-$ git clone https://github.com/nelnico08/videogames.git
+$ git clone https://github.com/Nelnico08/videogames.git
 $ cd ../path/to/the/file/client
 $ npm install
 $ npm start
