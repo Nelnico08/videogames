@@ -66,7 +66,7 @@ export default function Videogame() {
         ) : null}
       </div>
       <div className={style.imgContent}>
-        <img src={detail.image} className={style.image} />
+        <img src={detail.image} className={style.image} alt={detail.name} />
       </div>
     </header>
   );

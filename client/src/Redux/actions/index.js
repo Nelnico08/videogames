@@ -6,6 +6,7 @@ import {
   DELETE_GAME,
   FILTER_BY_CREATION,
   FILTER_BY_GENRE,
+  FILTER_BY_YEAR,
   GAME_DETAIL,
   GET_GAME,
   GET_GENRES,
@@ -65,6 +66,13 @@ export const getGenres = () => {
 export const filterByCreation = (filter) => {
   return {
     type: FILTER_BY_CREATION,
+    payload: filter,
+  };
+};
+
+export const filterByYears = (filter) => {
+  return {
+    type: FILTER_BY_YEAR,
     payload: filter,
   };
 };

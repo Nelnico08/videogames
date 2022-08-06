@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { all_genres } from '../Genres_Platforms/GenresPlatforms';
+import { all_genres, all_years } from '../Genres_Platforms/GenresPlatforms';
 import SearchBar from './SearchBar';
 import style from '../Styles/NavBar.module.css';
 
@@ -12,6 +12,7 @@ export default function NavBar({
   searchGame,
   resetGames,
   selects,
+  yearsHandler,
 }) {
   return (
     <div className={style.content}>
@@ -51,6 +52,18 @@ export default function NavBar({
             <option value="All Games">All Videogames</option>
             <option value="Original Games">Original Videogames</option>
             <option value="Added Games">Added Videogames</option>
+          </select>
+          <select
+            onChange={(e) => yearsHandler(e)}
+            className={style.selects}
+            value={selects.years}
+          >
+            <option value="">Years</option>
+            {all_years.map((filter, i) => (
+              <option key={i} value={filter}>
+                {filter}
+              </option>
+            ))}
           </select>
         </div>
         <div>

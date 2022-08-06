@@ -5,6 +5,7 @@ import {
   cleanVideogamesState,
   filterByCreation,
   filterByGenre,
+  filterByYears,
   getGame,
   orderByName,
   orderByRating,
@@ -22,6 +23,7 @@ export default function Home() {
     order: '',
     genres: '',
     created: '',
+    years: '',
   });
 
   const dispatch = useDispatch();
@@ -62,6 +64,7 @@ export default function Home() {
     setSelects({
       order: '',
       created: '',
+      years: '',
       genres: e.target.value,
     });
     dispatch(filterByGenre(e.target.value));
@@ -77,6 +80,17 @@ export default function Home() {
     dispatch(filterByCreation(e.target.value));
     setCurrentPage(1);
   };
+  const yearsHandler = (e) => {
+    e.preventDefault();
+    setSelects({
+      order: '',
+      genres: '',
+      created: '',
+      years: e.target.value,
+    });
+    dispatch(filterByYears(e.target.value));
+    setCurrentPage(1);
+  };
   const sortHandler = (e) => {
     e.preventDefault();
     if (e.target.value === 'A-Z' || e.target.value === 'Z-A') {
@@ -84,6 +98,7 @@ export default function Home() {
       setSelects({
         created: '',
         genres: '',
+        years: '',
         order: `${e.target.value}`,
       });
       setCurrentPage(1);
@@ -96,6 +111,7 @@ export default function Home() {
       setSelects({
         created: '',
         genres: '',
+        years: '',
         order: `${e.target.value}`,
       });
       setCurrentPage(1);
@@ -106,6 +122,7 @@ export default function Home() {
       setSelects({
         created: '',
         genres: '',
+        years: '',
         order: `${e.target.value}`,
       });
       setCurrentPage(1);
@@ -119,6 +136,7 @@ export default function Home() {
       order: '',
       genres: '',
       created: '',
+      years: '',
     });
     setCurrentPage(1);
   };
@@ -142,6 +160,7 @@ export default function Home() {
         resetFiltersHandler={resetFiltersHandler}
         searchGame={searchGame}
         resetGames={resetGames}
+        yearsHandler={yearsHandler}
         selects={selects}
       />
       <div>

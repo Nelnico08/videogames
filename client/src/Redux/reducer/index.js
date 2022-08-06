@@ -5,6 +5,7 @@ import {
   DELETE_GAME,
   FILTER_BY_CREATION,
   FILTER_BY_GENRE,
+  FILTER_BY_YEAR,
   GAME_DETAIL,
   GET_GAME,
   GET_GENRES,
@@ -136,6 +137,31 @@ const rootReducer = (state = initialState, action) => {
           (elem) => elem.id !== action.payload
         ),
         games: state.games.filter((elem) => elem.id !== action.payload),
+      };
+    case FILTER_BY_YEAR:
+      const gameYearsToNum = state.games.map((game) => {
+        return Number(game.released.slice(0, 4));
+      });
+      let index = [];
+      let payloadToNum = action.payload.split('-').map((year) => Number(year));
+      for (let i = 0; i < gameYearsToNum.length; i++) {
+        if (
+          gameYearsToNum[i] >= payloadToNum[0] &&
+          gameYearsToNum[i] < payloadToNum[1]
+        ) {
+          index.push(i);
+        }
+      }
+      let filterGameYear = [];
+      if (!index.length) filterGameYear.push("Can't find game");
+      else {
+        for (let i = 0; i < index.length; i++) {
+          filterGameYear.push(state.games[index[i]]);
+        }
+      }
+      return {
+        ...state,
+        videogames: filterGameYear,
       };
     default:
       return state;
